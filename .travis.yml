@@ -2,4 +2,4 @@ language: csharp
 mono: none
 solution: Microservice.sln
 script:    
-  - ./scripts/dotnet-build.sh
+  - chmod +x ./scripts/dotnet-build.sh
