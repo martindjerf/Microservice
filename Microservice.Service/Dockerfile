@@ -14,6 +14,6 @@ FROM microsoft/dotnet:aspnetcore-runtime
 WORKDIR /app
 COPY --from=build-env /app/out .
 
-ENV ASPNETCORE_URLS "http://*5000"
+ENV ASPNETCORE_URLS "http://*:5000"
 
-ENTRYPOINT ["dotnet", "Microservice.dll"]
+ENTRYPOINT ["dotnet", "Microservice.Service.dll"]

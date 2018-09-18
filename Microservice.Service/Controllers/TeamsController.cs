@@ -18,6 +18,7 @@ namespace Microservice.Service.Controllers
         }
 
         [HttpGet]
+        [Route("api/teams")]
         public async Task<IActionResult> GetAllTeams()
         {
             return Ok(_repo.GetTeams());
