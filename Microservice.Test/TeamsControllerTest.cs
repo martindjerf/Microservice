@@ -25,8 +25,8 @@ namespace Microservice.Test
 
         public async void QueryTeamsList()
         {
-           await controller.CreateTeam(new Team("Martin"));
-           await controller.CreateTeam(new Team("Ruth"));
+            await controller.CreateTeam(new Team("Martin"));
+            await controller.CreateTeam(new Team("Ruth"));
             var result = await controller.GetAllTeams() as OkObjectResult;
 
             var teams = new List<Team>(result.Value as List<Team>);
