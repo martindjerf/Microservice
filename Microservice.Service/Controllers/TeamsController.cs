@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microservice.Service.Interfaces;
 using Microservice.Service.Models;
 using Microsoft.AspNetCore.Mvc;
 
@@ -9,11 +10,24 @@ namespace Microservice.Service.Controllers
 {
     public class TeamsController : Controller
     {
-        [HttpGet]
-        public IEnumerable<Team> GetAllTeams()
+        private ITeamRepository _repo;
+
+        public TeamsController(ITeamRepository repo)
         {
-            var teamList = new List<Team>{new Team("Martin"),new Team("Ruth")};
-            return teamList;
+            _repo = repo;
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> GetAllTeams()
+        {
+            return Ok(_repo.GetTeams());
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> CreateTeam(Team newTeam)
+        {
+            _repo.AddTeam(newTeam);
+            return Ok(StatusCode(201));
         }
     }
 }
