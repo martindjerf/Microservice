@@ -25,7 +25,8 @@ namespace Microservice.Service.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> CreateTeam(Team newTeam)
+        [Route("api/teams")]
+        public async Task<IActionResult> CreateTeam([FromBody]Team newTeam)
         {
             _repo.AddTeam(newTeam);
             return Ok(StatusCode(201));
