@@ -1,4 +1,4 @@
-﻿using Microservice.Service;
+using Microservice.Service;
 using Microservice.Service.Models;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.TestHost;
@@ -9,7 +9,7 @@ using System.Net.Http;
 using System.Text;
 using Xunit;
 
-namespace Microservice.Test
+namespace Microservice.Test.IntegrationTests
 {
     public class SimpleIntegrationTests
     {

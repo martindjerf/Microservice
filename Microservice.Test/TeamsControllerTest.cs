@@ -6,23 +6,16 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Xunit;
+using Xunit.Extensions;
 
-namespace Microservice.Test
+namespace Microservice.Test.UnitTests
 {
     public class TeamsControllerTest
     {
         static MemoryTeamRepository repo= new MemoryTeamRepository();
         TeamsController controller = new TeamsController(repo);
 
-        
-
         [Fact]
-        public async void TestAllTests()
-        {
-            QueryTeamsList();
-            CreateTeamAddsTeamToList();
-        }
-
         public async void QueryTeamsList()
         {
             await controller.CreateTeam(new Team("Martin"));
@@ -34,7 +27,7 @@ namespace Microservice.Test
             Assert.Equal(2, teams.Count);
         }
 
-        
+        [Fact]
         public async void CreateTeamAddsTeamToList()
         {
             TeamsController controller = new TeamsController(repo);
@@ -54,11 +47,5 @@ namespace Microservice.Test
 
             Assert.NotNull(sampleTeam);
         }
-
-        //[Fact]
-        //public async void CannotAddMemberToNonExistingTeam()
-        //{
-
-        //}
     }
 }
