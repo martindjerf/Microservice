@@ -40,7 +40,6 @@ namespace Microservice.Service
             {
                 app.UseExceptionHandler("/Error");
             }
-            sadasda
             app.UseStaticFiles();
 
             app.UseMvc();

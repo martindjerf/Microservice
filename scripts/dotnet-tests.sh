@@ -1,8 +1,8 @@
 cd ..
-cd Microservice.Test
+cd ./Microservice.Test/
 dotnet test 
 dotnet restore
 cd ..
-cd Microservice.Test.Integrationtest
+cd ./Microservice.Test.Integrationtest/
 dotnet test
 read
