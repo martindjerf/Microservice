@@ -1,7 +1,6 @@
 language: csharp
 mono: none
 dotnet: 2.0.0
-solution: Microservice.sln
-script:    
-  - chmod +x ./scripts/dotnet-build.sh
-  - chmod +x ./scripts/dotnet-tests.sh
+script:
+  - ./scripts/dotnet-build.sh
+  - ./scripts/dotnet-test.sh
