@@ -3,4 +3,4 @@ mono: none
 solution: Microservice.sln
 script:    
   - chmod +x ./scripts/dotnet-build.sh
-  - ./scripts/dotnet-tests.sh
+  - chmod +x ./scripts/dotnet-tests.sh
