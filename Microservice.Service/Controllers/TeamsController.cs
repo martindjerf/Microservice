@@ -53,5 +53,13 @@ namespace Microservice.Service.Controllers
             _repo.AddTeamMember(id, newMember);
             return Ok();
         }
+
+        [HttpDelete]
+        [Route("api/teams/{id}/members/{memberId}")]
+        public async Task<IActionResult> DeleteTeamMember(Guid id,Guid memberId)
+        {
+            _repo.DeleteMember(id, memberId);
+            return Ok();
+        }
     }
 }

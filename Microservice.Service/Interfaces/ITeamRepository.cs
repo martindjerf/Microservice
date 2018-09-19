@@ -13,5 +13,6 @@ namespace Microservice.Service.Interfaces
         IEnumerable<Member> GetAllMembersFromTeam(Guid id);
         void AddTeamMember(Guid id, Member newMeber);
         Member GetTeamMember(Guid id, Guid memberId);
+        void DeleteMember(Guid id, Guid memberId);
     }
 }

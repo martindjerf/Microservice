@@ -18,8 +18,8 @@ namespace Microservice.Test.UnitTests
         [Fact]
         public async void QueryTeamsList()
         {
-            await controller.CreateTeam(new Team("Martin"));
-            await controller.CreateTeam(new Team("Ruth"));
+            await controller.CreateTeam(new Team("Team"));
+            await controller.CreateTeam(new Team("Team2"));
             var result = await controller.GetAllTeams() as OkObjectResult;
 
             var teams = new List<Team>(result.Value as List<Team>);
@@ -49,16 +49,16 @@ namespace Microservice.Test.UnitTests
         [Fact]
         public async void GetAllTeamMembersFromTeam()
         {
-            await controller.CreateTeam(new Team("Softhouse",Guid.NewGuid()));
+            await controller.CreateTeam(new Team("Team3",Guid.NewGuid()));
             var okResult = await controller.GetAllTeams() as OkObjectResult;
 
             List<Team> teams = new List<Team>(okResult.Value as List<Team>);
 
-            var softhouseTeam = teams.FirstOrDefault(t => t.Name == "Softhouse");
+            var softhouseTeam = teams.FirstOrDefault(t => t.Name == "Team3");
             int originalCount = softhouseTeam.Members.Count();
-            Member member = new Member("Martin", "Djerf", Guid.NewGuid());
-            Member member2 = new Member("Oskar", "Collin", Guid.NewGuid());
-            Member member3 = new Member("Osama", "Menim", Guid.NewGuid());
+            Member member = new Member("Team", "Member1", Guid.NewGuid());
+            Member member2 = new Member("Team", "Member2", Guid.NewGuid());
+            Member member3 = new Member("Team", "Member3", Guid.NewGuid());
             await controller.AddNewTeamMember(softhouseTeam.ID, member);
             await controller.AddNewTeamMember(softhouseTeam.ID, member2);
             await controller.AddNewTeamMember(softhouseTeam.ID, member3);
@@ -70,18 +70,18 @@ namespace Microservice.Test.UnitTests
         }
 
         [Fact]
-        public async void DeleteTeamMember()
+        public async void GetSpecificTeamMember()
         {
-            await controller.CreateTeam(new Team("Softhouse",Guid.NewGuid()));
+            await controller.CreateTeam(new Team("Team3", Guid.NewGuid()));
             var okResult = await controller.GetAllTeams() as OkObjectResult;
 
             List<Team> teams = new List<Team>(okResult.Value as List<Team>);
 
-            var softhouseTeam = teams.FirstOrDefault(t => t.Name == "Softhouse");
+            var softhouseTeam = teams.FirstOrDefault(t => t.Name == "Team3");
             int originalCount = softhouseTeam.Members.Count();
-            Member member = new Member("Martin", "Djerf", Guid.NewGuid());
-            Member member2 = new Member("Oskar", "Collin", Guid.NewGuid());
-            Member member3 = new Member("Osama", "Menim", Guid.NewGuid());
+            Member member = new Member("Team", "Member1", Guid.NewGuid());
+            Member member2 = new Member("Team", "Member2", Guid.NewGuid());
+            Member member3 = new Member("Team", "Member3", Guid.NewGuid());
             await controller.AddNewTeamMember(softhouseTeam.ID, member);
             await controller.AddNewTeamMember(softhouseTeam.ID, member2);
             await controller.AddNewTeamMember(softhouseTeam.ID, member3);
@@ -92,6 +92,35 @@ namespace Microservice.Test.UnitTests
             Assert.Equal(member.ID, selectedMember.ID);
             Assert.Equal(member.FirstName, selectedMember.FirstName);
             Assert.Equal(member.LastName, selectedMember.LastName);
+        }
+
+        [Fact]
+        public async void DeleteSpecificTeamMember()
+        {
+            await controller.CreateTeam(new Team("Team4", Guid.NewGuid()));
+            var okResult = await controller.GetAllTeams() as OkObjectResult;
+
+            List<Team> teams = new List<Team>(okResult.Value as List<Team>);
+
+            var team = teams.FirstOrDefault(t => t.Name == "Team4");
+            Member member = new Member("Team", "Member1", Guid.NewGuid());
+            Member member2 = new Member("Team", "Member2", Guid.NewGuid());
+            Member member3 = new Member("Team", "Member3", Guid.NewGuid());
+            await controller.AddNewTeamMember(team.ID, member);
+            await controller.AddNewTeamMember(team.ID, member2);
+            await controller.AddNewTeamMember(team.ID, member3);
+
+            int originalCount = team.Members.Count();
+
+            await controller.DeleteTeamMember(team.ID, member3.ID);
+
+            var result = await controller.GetAllMembersFromTeam(team.ID) as OkObjectResult;
+
+            var currentTeamMemberCount = new List<Member>(result.Value as List<Member>);
+
+            Assert.Equal(originalCount, currentTeamMemberCount.Count());
+
+
         }
     }
 }
