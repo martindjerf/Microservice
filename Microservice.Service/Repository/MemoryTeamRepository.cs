@@ -58,5 +58,16 @@ namespace Microservice.Service.Repsitory
             var member = GetTeamMember(id, memberId);
             team.Members.Remove(member);
         }
+
+        public void DeleteTeam(Guid id)
+        {
+            var team = _teams.Where(t => t.ID == id).FirstOrDefault();
+            _teams.Remove(team);
+        }
+
+        public Team GetTeam(Guid id)
+        {
+            return _teams.Where(t => t.ID == id).FirstOrDefault(); 
+        }
     }
 }

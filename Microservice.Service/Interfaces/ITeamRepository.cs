@@ -14,5 +14,7 @@ namespace Microservice.Service.Interfaces
         void AddTeamMember(Guid id, Member newMeber);
         Member GetTeamMember(Guid id, Guid memberId);
         void DeleteMember(Guid id, Guid memberId);
+        void DeleteTeam(Guid id);
+        Team GetTeam(Guid id);
     }
 }

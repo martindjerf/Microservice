@@ -119,7 +119,26 @@ namespace Microservice.Test.UnitTests
             var currentTeamMemberCount = new List<Member>(result.Value as List<Member>);
 
             Assert.Equal(originalCount - 1, currentTeamMemberCount.Count());
+        }
 
+        [Fact]
+        public async void DeleteTeam()
+        {
+            var id = Guid.NewGuid();
+
+            await controller.CreateTeam(new Team("Team5", id));
+
+            var teamResult = await controller.GetTeam(id) as OkObjectResult;
+
+            var addedTeam = teamResult.Value as Team;
+
+            await controller.DeleteTeam(addedTeam.ID);
+
+            var teamResultAfterDeletion = await controller.GetTeam(id) as OkObjectResult;
+
+            var deletedTeam = teamResultAfterDeletion.Value as Team;
+
+            Assert.Null(deletedTeam);
 
         }
     }

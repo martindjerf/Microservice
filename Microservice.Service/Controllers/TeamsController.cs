@@ -24,6 +24,13 @@ namespace Microservice.Service.Controllers
             return Ok(_repo.GetTeams());
         }
 
+        [HttpGet]
+        [Route("api/teams/{id}")]
+        public async Task<IActionResult> GetTeam(Guid id)
+        {
+            return Ok(_repo.GetTeam(id));
+        }
+
         [HttpPost]
         [Route("api/teams")]
         public async Task<IActionResult> CreateTeam([FromBody]Team newTeam)
@@ -51,6 +58,14 @@ namespace Microservice.Service.Controllers
         public async Task<IActionResult> AddNewTeamMember(Guid id, [FromBody]Member newMember)
         {
             _repo.AddTeamMember(id, newMember);
+            return Ok();
+        }
+
+        [HttpDelete]
+        [Route("api/teams/{id}")]
+        public async Task<IActionResult> DeleteTeam(Guid id)
+        {
+            _repo.DeleteTeam(id);
             return Ok();
         }
 
