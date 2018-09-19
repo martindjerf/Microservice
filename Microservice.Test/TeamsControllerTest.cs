@@ -139,7 +139,6 @@ namespace Microservice.Test.UnitTests
             var deletedTeam = teamResultAfterDeletion.Value as Team;
 
             Assert.Null(deletedTeam);
-
         }
     }
 }
