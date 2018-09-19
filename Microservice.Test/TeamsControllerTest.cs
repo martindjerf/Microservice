@@ -118,7 +118,7 @@ namespace Microservice.Test.UnitTests
 
             var currentTeamMemberCount = new List<Member>(result.Value as List<Member>);
 
-            Assert.Equal(originalCount, currentTeamMemberCount.Count());
+            Assert.Equal(originalCount - 1, currentTeamMemberCount.Count());
 
 
         }
