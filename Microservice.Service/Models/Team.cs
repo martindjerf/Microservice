@@ -13,6 +13,7 @@ namespace Microservice.Service.Models
 
         public Team()
         {
+            ID = Guid.NewGuid();
             Members = new List<Member>();
         }
 

@@ -10,5 +10,8 @@ namespace Microservice.Service.Interfaces
     {
         IEnumerable<Team> GetTeams();
         void AddTeam(Team team);
+        IEnumerable<Member> GetAllMembersFromTeam(Guid id);
+        void AddTeamMember(Guid id, Member newMeber);
+        Member GetTeamMember(Guid id, Guid memberId);
     }
 }

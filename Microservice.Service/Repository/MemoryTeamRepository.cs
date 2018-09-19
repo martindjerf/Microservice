@@ -33,5 +33,23 @@ namespace Microservice.Service.Repsitory
         {
             return _teams;
         }
+
+        public IEnumerable<Member> GetAllMembersFromTeam(Guid id)
+        {
+            var team = _teams.Where(t => t.ID == id).FirstOrDefault();
+            return team.Members;
+        }
+
+        public void AddTeamMember(Guid id, Member newMeber)
+        {
+            _teams.Where(t => t.ID == id).FirstOrDefault().Members.Add(newMeber);
+        }
+
+        public Member GetTeamMember(Guid id, Guid memberId)
+        {
+            var team = _teams.Where(t => t.ID == id).FirstOrDefault();
+            var member = team.Members.Where(m => m.ID == memberId).FirstOrDefault();
+            return member;
+        }
     }
 }

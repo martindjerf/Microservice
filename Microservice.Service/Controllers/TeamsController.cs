@@ -31,5 +31,27 @@ namespace Microservice.Service.Controllers
             _repo.AddTeam(newTeam);
             return Ok(StatusCode(201));
         }
+
+        [HttpGet]
+        [Route("api/teams/{id}/members")]
+        public async Task<IActionResult> GetAllMembersFromTeam(Guid id)
+        {
+           return Ok(_repo.GetAllMembersFromTeam(id));
+        }
+
+        [HttpGet]
+        [Route("api/teams/{id}/members/{memberId}")]
+        public async Task<IActionResult> GetTeamMember(Guid id, Guid memberId)
+        {
+            return Ok(_repo.GetTeamMember(id, memberId));
+        }
+
+        [HttpPost]
+        [Route("api/teams/{id}/members")]
+        public async Task<IActionResult> AddNewTeamMember(Guid id, [FromBody]Member newMember)
+        {
+            _repo.AddTeamMember(id, newMember);
+            return Ok();
+        }
     }
 }
