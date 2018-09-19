@@ -5,4 +5,4 @@ before_script:
   - chmod -R a+x scripts
 script:
   - ./scripts/dotnet-build.sh
-  - ./scripts/dotnet-test.sh
+  - ./scripts/dotnet-tests.sh
