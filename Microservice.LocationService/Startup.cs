@@ -6,6 +6,7 @@ using Microservice.LocationService.Interfaces;
 using Microservice.LocationService.Repository;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -43,6 +44,11 @@ namespace Microservice.LocationService
             app.UseStaticFiles();
 
             app.UseMvc();
+
+            app.Run(async context =>
+            {
+                await context.Response.WriteAsync("Location service is running..");
+            });
         }
     }
 }

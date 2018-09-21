@@ -1,4 +1,6 @@
+using Microservice.Service.Clients;
 using Microservice.Service.Controllers;
+using Microservice.Service.Interfaces;
 using Microservice.Service.Models;
 using Microservice.Service.Repsitory;
 using Microsoft.AspNetCore.Mvc;
@@ -6,7 +8,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Xunit;
-using Xunit.Extensions;
 
 namespace Microservice.Test.UnitTests
 {
@@ -14,7 +15,8 @@ namespace Microservice.Test.UnitTests
     {
         static MemoryTeamRepository repo= new MemoryTeamRepository();
         TeamsController controller = new TeamsController(repo);
-
+        static IHttpLocationClient client = new HttpLocationClient("http://localhost");
+        MembersController membersController = new MembersController(repo, client);
         //[Fact]
         //public async void QueryTeamsList()
         //{
@@ -59,11 +61,11 @@ namespace Microservice.Test.UnitTests
             Member member = new Member("Team", "Member1", Guid.NewGuid());
             Member member2 = new Member("Team", "Member2", Guid.NewGuid());
             Member member3 = new Member("Team", "Member3", Guid.NewGuid());
-            await controller.AddNewTeamMember(softhouseTeam.ID, member);
-            await controller.AddNewTeamMember(softhouseTeam.ID, member2);
-            await controller.AddNewTeamMember(softhouseTeam.ID, member3);
+            await membersController.AddNewTeamMember(softhouseTeam.ID, member);
+            await membersController.AddNewTeamMember(softhouseTeam.ID, member2);
+            await membersController.AddNewTeamMember(softhouseTeam.ID, member3);
 
-            var membersResult = await controller.GetAllMembersFromTeam(softhouseTeam.ID) as OkObjectResult;
+            var membersResult = await membersController.GetAllMembersFromTeam(softhouseTeam.ID) as OkObjectResult;
             var members = new List<Member>(membersResult.Value as List<Member>);
 
             Assert.Equal(originalCount + 3, members.Count);
@@ -82,11 +84,11 @@ namespace Microservice.Test.UnitTests
             Member member = new Member("Team", "Member1", Guid.NewGuid());
             Member member2 = new Member("Team", "Member2", Guid.NewGuid());
             Member member3 = new Member("Team", "Member3", Guid.NewGuid());
-            await controller.AddNewTeamMember(softhouseTeam.ID, member);
-            await controller.AddNewTeamMember(softhouseTeam.ID, member2);
-            await controller.AddNewTeamMember(softhouseTeam.ID, member3);
+            await membersController.AddNewTeamMember(softhouseTeam.ID, member);
+            await membersController.AddNewTeamMember(softhouseTeam.ID, member2);
+            await membersController.AddNewTeamMember(softhouseTeam.ID, member3);
 
-            var result = await controller.GetTeamMember(softhouseTeam.ID, member.ID) as OkObjectResult;
+            var result = await membersController.GetTeamMember(softhouseTeam.ID, member.ID) as OkObjectResult;
             var selectedMember = result.Value as Member;
 
             Assert.Equal(member.ID, selectedMember.ID);
@@ -106,15 +108,15 @@ namespace Microservice.Test.UnitTests
             Member member = new Member("Team", "Member1", Guid.NewGuid());
             Member member2 = new Member("Team", "Member2", Guid.NewGuid());
             Member member3 = new Member("Team", "Member3", Guid.NewGuid());
-            await controller.AddNewTeamMember(team.ID, member);
-            await controller.AddNewTeamMember(team.ID, member2);
-            await controller.AddNewTeamMember(team.ID, member3);
+            await membersController.AddNewTeamMember(team.ID, member);
+            await membersController.AddNewTeamMember(team.ID, member2);
+            await membersController.AddNewTeamMember(team.ID, member3);
 
             int originalCount = team.Members.Count();
 
-            await controller.DeleteTeamMember(team.ID, member3.ID);
+            await membersController.DeleteTeamMember(team.ID, member3.ID);
 
-            var result = await controller.GetAllMembersFromTeam(team.ID) as OkObjectResult;
+            var result = await membersController.GetAllMembersFromTeam(team.ID) as OkObjectResult;
 
             var currentTeamMemberCount = new List<Member>(result.Value as List<Member>);
 

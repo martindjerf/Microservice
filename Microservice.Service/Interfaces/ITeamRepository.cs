@@ -12,7 +12,7 @@ namespace Microservice.Service.Interfaces
         void AddTeam(Team team);
         IEnumerable<Member> GetAllMembersFromTeam(Guid id);
         void AddTeamMember(Guid id, Member newMeber);
-        Member GetTeamMember(Guid id, Guid memberId);
+        Task<Member> GetTeamMemberAsync(Guid id, Guid memberId);
         void DeleteMember(Guid id, Guid memberId);
         void DeleteTeam(Guid id);
         Team GetTeam(Guid id);

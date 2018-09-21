@@ -14,6 +14,6 @@ FROM microsoft/dotnet:aspnetcore-runtime
 WORKDIR /app
 COPY --from=build-env /app/out .
 
-ENV ASPNETCORE_URLS "http://*:5050"
+ENV ASPNETCORE_URLS "http://*:5001"
 
 ENTRYPOINT ["dotnet", "Microservice.LocationService.dll"]

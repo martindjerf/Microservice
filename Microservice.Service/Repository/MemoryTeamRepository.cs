@@ -22,6 +22,7 @@ namespace Microservice.Service.Repsitory
         public MemoryTeamRepository(ICollection<Team> teams)
         {
             _teams = teams;
+            //_client = client;
         }
 
         public void AddTeam(Team team)
@@ -45,17 +46,17 @@ namespace Microservice.Service.Repsitory
             _teams.Where(t => t.ID == id).FirstOrDefault().Members.Add(newMeber);
         }
 
-        public Member GetTeamMember(Guid id, Guid memberId)
+        public async Task<Member> GetTeamMemberAsync(Guid id, Guid memberId)
         {
             var team = _teams.Where(t => t.ID == id).FirstOrDefault();
-            var member = team.Members.Where(m => m.ID == memberId).FirstOrDefault();
+            var member = team.Members.Where(m => m.ID == memberId).FirstOrDefault();            
             return member;
         }
 
-        public void DeleteMember(Guid id, Guid memberId)
+        public async void DeleteMember(Guid id, Guid memberId)
         {
             var team = _teams.Where(t => t.ID == id).FirstOrDefault();
-            var member = GetTeamMember(id, memberId);
+            var member = await GetTeamMemberAsync(id, memberId);
             team.Members.Remove(member);
         }
 
@@ -67,7 +68,9 @@ namespace Microservice.Service.Repsitory
 
         public Team GetTeam(Guid id)
         {
-            return _teams.Where(t => t.ID == id).FirstOrDefault(); 
+            var team =_teams.Where(t => t.ID == id).FirstOrDefault();           
+            return team;
+
         }
     }
 }

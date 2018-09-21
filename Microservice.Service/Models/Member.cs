@@ -10,6 +10,7 @@ namespace Microservice.Service.Models
         public Guid ID { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
+        public LocationRecord Location { get; set; }
 
         public Member()
         {

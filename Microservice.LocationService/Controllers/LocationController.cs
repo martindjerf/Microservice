@@ -38,5 +38,12 @@ namespace Microservice.LocationService.Controllers
         {
             return Ok(_locationRecordRepository.AllForMember(memberId));
         }
+
+        [HttpGet]
+        [Route("api/locations/{memberId}/latest")]
+        public IActionResult GetLatestLocationsForMember(Guid memberId)
+        {
+            return Ok(_locationRecordRepository.GetLatestForMember(memberId));
+        }
     }
 }
